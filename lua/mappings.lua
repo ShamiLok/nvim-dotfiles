@@ -1,0 +1,30 @@
+vim.keymap.set("n", "<leader>n", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
+
+-- В Normal mode: вставка текста из буфера обмена перед курсором
+vim.keymap.set('n', '<C-v>', '"+P', { noremap = true })
+
+-- В Insert mode: вставка текста из буфера обмена в позиции курсора
+vim.keymap.set('i', '<C-v>', '<C-r>+', { noremap = true })
+
+-- В Command-line mode: вставка текста из буфера обмена в командной строке
+vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true })
+
+-- вставка в visual mode
+vim.keymap.set('v', '<C-v>', '"+P', { noremap = true })
+
+-- Tab autocomplete with CoC
+vim.api.nvim_set_keymap("i", "<Tab>", "coc#pum#visible() ? coc#pum#confirm() : '<Tab>'", { noremap = true, expr = true, silent = true })
+
+-- Close terminal with ESC
+vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
+
+-- global files search 
+vim.api.nvim_set_keymap('n', '<leader>f', ':Files<CR>', { noremap = true, silent = true })
+
+-- global text search
+vim.api.nvim_set_keymap('n', '<leader>r', ':Rg ', { noremap = true })
+
+-- switch buffer
+vim.api.nvim_set_keymap('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('n', '<leader>bp', ':bprevious<CR>', { noremap = true, silent = true })
+
