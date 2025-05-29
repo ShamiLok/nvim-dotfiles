@@ -56,8 +56,14 @@ vim.g.airline_statusline_ontop = 0
 vim.g.airline_theme = 'deus'
 vim.g["airline#extensions#tabline#formatter"] = 'default'
 vim.g["airline#extensions#coc#enabled"] = 0
-vim.g["airline#extensions#branch#enabled"] = 0
-vim.g.airline_section_b = '%{fugitive#head()}'
+
+-- 1) Включаем родное расширение веток
+vim.g["airline#extensions#branch#enabled"]   = 1
+-- отключаем показ статистики
+vim.g["airline#extensions#branch#show_state"] = 0
+-- 2) Форматируем так: 🔀 %s в имени ветки, и добавляем ⚡ если есть нечёрные изменения
+vim.g["airline#extensions#branch#formatter"] = " %s%{len(getbufvar(bufnr('%'), '&mod')) and '⚡' or ''}"
+
 vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/options.lua)
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])

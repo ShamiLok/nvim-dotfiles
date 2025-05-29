@@ -29,3 +29,6 @@ vim.api.nvim_set_keymap('n', '<leader>r', ':Rg ', { noremap = true })
 vim.api.nvim_set_keymap('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<leader>bp', ':bprevious<CR>', { noremap = true, silent = true })
 
+--comments 
+vim.keymap.set("n", "<leader>c", "<Plug>NERDCommenterToggle", {})
+vim.keymap.set("v", "<leader>c", "<Plug>NERDCommenterToggle", {})
