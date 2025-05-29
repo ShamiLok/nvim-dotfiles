@@ -11,5 +11,6 @@ vim.cmd [[
 	Plug 'junegunn/fzf.vim'
 	Plug 'tpope/vim-fugitive'
 	Plug 'rhysd/conflict-marker.vim'
+	Plug 'lewis6991/gitsigns.nvim'
 	call plug#end()
 ]]

@@ -22,7 +22,7 @@ vim.opt.relativenumber = false
 vim.opt.wildmode = { "longest", "list" }
 
 vim.cmd("syntax on")
-vim.opt.foldmethod = "indent"
+vim.opt.foldmethod = "manual"
 
 vim.opt.mouse = "a"
 vim.opt.clipboard = "unnamedplus"
@@ -44,6 +44,8 @@ vim.opt.listchars = {
   eol = '↴'
 }
 
+-- vim.cmd('packadd vim-fugitive')
+
 -- airline
 vim.g["airline#extensions#tabline#enabled"] = 1
 vim.g.airline_powerline_fonts = 1
@@ -51,8 +53,8 @@ vim.g.airline_statusline_ontop = 0
 vim.g.airline_theme = 'deus'
 vim.g["airline#extensions#tabline#formatter"] = 'default'
 vim.g["airline#extensions#coc#enabled"] = 0
-vim.g["airline#extensions#branch#enabled"] = 1
-vim.g.airline_section_b = '%{fugitive#statusline()}'
+vim.g["airline#extensions#branch#enabled"] = 0
+vim.g.airline_section_b = '%{fugitive#head()}'
 vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/options.lua)
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])
