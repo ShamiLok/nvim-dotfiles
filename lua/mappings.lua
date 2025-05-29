@@ -1,4 +1,5 @@
-vim.keymap.set("n", "<leader>n", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
+-- vim.keymap.set("n", "<leader>n", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 
 -- В Normal mode: вставка текста из буфера обмена перед курсором
 vim.keymap.set('n', '<C-v>', '"+P', { noremap = true })

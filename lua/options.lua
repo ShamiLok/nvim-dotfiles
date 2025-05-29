@@ -22,7 +22,10 @@ vim.opt.relativenumber = false
 vim.opt.wildmode = { "longest", "list" }
 
 vim.cmd("syntax on")
-vim.opt.foldmethod = "manual"
+vim.opt.foldmethod		= "indent" -- фолд по табам
+vim.opt.foldnestmax		= 1 -- уровни вложенности
+vim.opt.foldminlines	= 20 -- количество строк для фолда
+vim.opt.foldlevel		= 1 -- по умолчанию все будет свернуто на уровень 1
 
 vim.opt.mouse = "a"
 vim.opt.clipboard = "unnamedplus"
@@ -59,3 +62,4 @@ vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/opt
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])
 vim.g.airline_section_z = ''  -- Процент прокрутки
+
