@@ -20,10 +20,15 @@ vim.api.nvim_set_keymap("i", "<Tab>", "coc#pum#visible() ? coc#pum#confirm() : '
 vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
 
 -- global files search 
-vim.api.nvim_set_keymap('n', '<leader>f', ':Files<CR>', { noremap = true, silent = true })
+--vim.api.nvim_set_keymap('n', '<leader>f', ':Files<CR>', { noremap = true, silent = true })
 
 -- global text search
-vim.api.nvim_set_keymap('n', '<leader>r', ':Rg ', { noremap = true })
+--vim.api.nvim_set_keymap('n', '<leader>r', ':Rg ', { noremap = true })
+
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = "Telescope find files" })
+vim.keymap.set('n', '<leader>r', builtin.live_grep,  { desc = "Telescope live grep" })
 
 -- switch buffer
 vim.api.nvim_set_keymap('n', '<leader>bn', ':bnext<CR>', { noremap = true, silent = true })
