@@ -1,13 +1,37 @@
--- Загрузка необходимых модулей
-local telescope = require("telescope")
-local previewers = require("telescope.previewers")
-local actions = require("telescope.actions")
-local action_state = require("telescope.actions.state")
+local has_telescope, telescope = pcall(require, "telescope")
+if not has_telescope then
+  return
+end
 
--- Основная настройка Telescope
+local actions       = require("telescope.actions")
+local action_state  = require("telescope.actions.state")
+local previewers    = require("telescope.previewers")
+local sorters       = require("telescope.sorters")
+
+--- Общая функция, которая вызывается при нажатии <CR>:
+--- берёт entry, закрывает окно и открывает файл на нужной строке
+local function open_with_position(prompt_bufnr)
+  local entry = action_state.get_selected_entry()
+  if not entry or not entry.path then
+    return
+  end
+  -- Закрываем окно Telescope
+  actions.close(prompt_bufnr)
+  -- Если entry содержит поля 'path' и 'line', можно сразу перейти
+  -- entry.value выглядит как "path:line:col:	text..."
+  -- Вызов select_default сделает это автоматически, но мы можем явно распарсить:
+  local filename = entry.path
+  local lnum = entry.line or entry.lnum or entry.row or nil
+  if lnum then
+    vim.cmd(string.format("edit +%d %s", lnum, vim.fn.fnameescape(filename)))
+  else
+    vim.cmd("edit " .. vim.fn.fnameescape(filename))
+  end
+end
+
 telescope.setup{
   defaults = {
-    -- Аргументы для vimgrep (использует локальный rg)
+    -- Параметры для live_grep (rg с возвратом file:line:col:match)
     vimgrep_arguments = {
       "rg",
       "--color=never",
@@ -16,75 +40,82 @@ telescope.setup{
       "--line-number",
       "--column",
       "--smart-case",
+      -- Исключения.
+      "--glob", "!node_modules/*",
     },
 
-    -- Префиксы и отображение путей
     prompt_prefix   = "🔍 ",
     selection_caret = "➤ ",
     path_display    = { "shorten" },
 
-    -- Preview через стандартный buffer_previewer_maker
+    -- Preview всего файла (или фрагмента вокруг match)
     buffer_previewer_maker = previewers.buffer_previewer_maker,
 
-    -- Маппинги, которые срабатывают внутри окна Telescope
+    file_sorter = sorters.get_fzy_sorter,
+
+    -- Настройки для маппингов внутри Telescope
     mappings = {
       i = {
-        -- Вставочный режим: Enter → открыть файл, на котором стоит курсор
-        ["<CR>"] = function(prompt_bufnr)
-          local entry = action_state.get_selected_entry()
-          if not entry or not entry.path then
-            return
-          end
-          actions.close(prompt_bufnr)
-          vim.cmd("edit " .. vim.fn.fnameescape(entry.path))
+        -- TODO: Навигация без wrap
+        ["<C-n>"] = function(prompt_bufnr)
+          actions.move_selection_next(prompt_bufnr, { wrap = false })
         end,
-        -- Можно добавить другие горячие клавиши здесь (Esc, Ctrl-C и т.д.)
+        ["<C-p>"] = function(prompt_bufnr)
+          actions.move_selection_previous(prompt_bufnr, { wrap = false })
+        end,
+        ["<Down>"] = function(prompt_bufnr)
+          actions.move_selection_next(prompt_bufnr, { wrap = false })
+        end,
+        ["<Up>"] = function(prompt_bufnr)
+          actions.move_selection_previous(prompt_bufnr, { wrap = false })
+        end,
+
+        -- Закрытие по ESC
+        ["<Esc>"] = actions.close,
+        -- При выборе Enter — использовать нашу функцию,
+        -- чтобы перейти на строку/столбец (если доступны)
+        ["<CR>"]  = open_with_position,
       },
       n = {
-		["<Esc>"] = actions.close,
-        -- Нормальный режим: Enter → открыть файл
-        ["<CR>"] = function(prompt_bufnr)
-          local entry = action_state.get_selected_entry()
-          if not entry or not entry.path then
-            return
-          end
-          actions.close(prompt_bufnr)
-          vim.cmd("edit " .. vim.fn.fnameescape(entry.path))
+        ["<C-n>"] = function(prompt_bufnr)
+          actions.move_selection_next(prompt_bufnr, { wrap = false })
         end,
-      },
-    },
+        ["<C-p>"] = function(prompt_bufnr)
+          actions.move_selection_previous(prompt_bufnr, { wrap = false })
+        end,
+        ["<Down>"] = function(prompt_bufnr)
+          actions.move_selection_next(prompt_bufnr, { wrap = false })
+        end,
+        ["<Up>"] = function(prompt_bufnr)
+          actions.move_selection_previous(prompt_bufnr, { wrap = false })
+        end,
 
-    -- Количество строк в превью (по желанию)
-    preview = {
-      filesize_limit = 50,  -- если файл >50MB, не показываем превью
+        ["<Esc>"] = actions.close,
+        ["<CR>"]  = open_with_position,
+      },
     },
   },
 
   pickers = {
-    -- Настройка поиска файлов (:Telescope find_files)
+    -- find_files: ищем все файлы, но исключаем node_modules и .git
     find_files = {
-      -- Использовать rg для поиска списка файлов (рекурсивно, включая скрытые,
-      -- но игнорируя .git и node_modules)
       find_command = {
         "rg",
         "--files",
         "--hidden",
         "--follow",
-        "--glob",
-        "!.git/*",
-        "--glob",
-        "!node_modules/*"
-      }
+        "--glob", "!.git/*",
+        "--glob", "!node_modules/*",
+      },
+      -- Превью по умолчанию (buffer_previewer_maker)
     },
-
-    -- Настройка live_grep (:Telescope live_grep)
+    -- live_grep: наследует vimgrep_arguments из defaults
     live_grep = {
-      -- По умолчанию уже использует defaults.vimgrep_arguments
-      -- Можно указать дополнительные параметры, но обычно не нужно.
+      -- никаких дополнительных настроек не требуется
     },
   },
 
   extensions = {
-    -- Здесь можно подключать и настраивать расширения (fzf-native, media_files и т.д.)
+    -- Можно тут подключать fzf-native, media_files и т.п.
   },
 }
