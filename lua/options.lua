@@ -68,4 +68,3 @@ vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/opt
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])
 vim.g.airline_section_z = ''  -- Процент прокрутки
-
