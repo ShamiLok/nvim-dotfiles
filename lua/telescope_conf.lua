@@ -1,79 +1,90 @@
+-- Загрузка необходимых модулей
+local telescope = require("telescope")
+local previewers = require("telescope.previewers")
+local actions = require("telescope.actions")
+local action_state = require("telescope.actions.state")
 
-local has_win = vim.fn.has('win32') == 1
-local telescope = require('telescope')
-local previewers = require('telescope.previewers')
-local actions   = require('telescope.actions')
-local action_state = require('telescope.actions.state')
-local Job = require('plenary.job')
-
--- конвертер WSL->Windows
-local function to_win_path(wsl_path)
-  local ok, out = pcall(vim.fn.systemlist, 'wsl wslpath -w "' .. wsl_path .. '"')
-  if not ok or out[1] == nil or out[1] == "" then
-    return wsl_path
-  end
-  return out[1]:gsub('\r','')
-end
-
--- твой previewer для Windows
-local function wsl_previewer_maker(filepath, bufnr, opts)
-  local winpath = to_win_path(filepath)
-  Job:new({
-    command = "cmd.exe",
-    args = {"/c", "type", winpath},
-    on_stdout = function(_, line)
-      vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, {line})
-    end,
-  }):sync()
-end
-
+-- Основная настройка Telescope
 telescope.setup{
   defaults = {
-    prompt_prefix    = "🔍 ",
-    selection_caret  = "➤ ",
-    path_display     = { "shorten" },
-
-    vimgrep_arguments = has_win and {
-      'rgwsl.cmd', '--vimgrep',
-    } or {
-      'rg','--vimgrep','--no-heading','--color=never','--smart-case',
+    -- Аргументы для vimgrep (использует локальный rg)
+    vimgrep_arguments = {
+      "rg",
+      "--color=never",
+      "--no-heading",
+      "--with-filename",
+      "--line-number",
+      "--column",
+      "--smart-case",
     },
 
-    buffer_previewer_maker = has_win
-      and wsl_previewer_maker
-      or previewers.buffer_previewer_maker,
+    -- Префиксы и отображение путей
+    prompt_prefix   = "🔍 ",
+    selection_caret = "➤ ",
+    path_display    = { "shorten" },
 
+    -- Preview через стандартный buffer_previewer_maker
+    buffer_previewer_maker = previewers.buffer_previewer_maker,
+
+    -- Маппинги, которые срабатывают внутри окна Telescope
     mappings = {
       i = {
-        -- Enter в insert-режиме
+        -- Вставочный режим: Enter → открыть файл, на котором стоит курсор
         ["<CR>"] = function(prompt_bufnr)
           local entry = action_state.get_selected_entry()
+          if not entry or not entry.path then
+            return
+          end
           actions.close(prompt_bufnr)
-          local path = entry.path or entry.filename or entry.value
-          local real = has_win and to_win_path(path) or path
-          vim.cmd("edit " .. vim.fn.fnameescape(real))
+          vim.cmd("edit " .. vim.fn.fnameescape(entry.path))
         end,
+        -- Можно добавить другие горячие клавиши здесь (Esc, Ctrl-C и т.д.)
       },
       n = {
-        -- Enter в normal-режиме
+		["<Esc>"] = actions.close,
+        -- Нормальный режим: Enter → открыть файл
         ["<CR>"] = function(prompt_bufnr)
           local entry = action_state.get_selected_entry()
+          if not entry or not entry.path then
+            return
+          end
           actions.close(prompt_bufnr)
-          local path = entry.path or entry.filename or entry.value
-          local real = has_win and to_win_path(path) or path
-          vim.cmd("edit " .. vim.fn.fnameescape(real))
+          vim.cmd("edit " .. vim.fn.fnameescape(entry.path))
         end,
       },
     },
+
+    -- Количество строк в превью (по желанию)
+    preview = {
+      filesize_limit = 50,  -- если файл >50MB, не показываем превью
+    },
   },
+
   pickers = {
+    -- Настройка поиска файлов (:Telescope find_files)
     find_files = {
-      find_command = has_win and {
-        'rgwsl.cmd','--files','--hidden','--follow','--glob','!.git/*'
-      } or nil,
+      -- Использовать rg для поиска списка файлов (рекурсивно, включая скрытые,
+      -- но игнорируя .git и node_modules)
+      find_command = {
+        "rg",
+        "--files",
+        "--hidden",
+        "--follow",
+        "--glob",
+        "!.git/*",
+        "--glob",
+        "!node_modules/*"
+      }
     },
+
+    -- Настройка live_grep (:Telescope live_grep)
     live_grep = {
-      -- опционально можно задать какие-то picker-specific настройки
+      -- По умолчанию уже использует defaults.vimgrep_arguments
+      -- Можно указать дополнительные параметры, но обычно не нужно.
     },
+  },
+
+  extensions = {
+    -- Здесь можно подключать и настраивать расширения (fzf-native, media_files и т.д.)
   },
 }

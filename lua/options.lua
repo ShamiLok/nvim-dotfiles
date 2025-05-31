@@ -68,32 +68,3 @@ vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/opt
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])
 vim.g.airline_section_z = ''  -- Процент прокрутки
-
--- ОС-специфичные настройки
-if vim.fn.has("win32") == 1 then
-  -- 1) grepprg для :grep и quickfix
-  vim.o.grepprg    = "wsl rg --vimgrep --no-heading --smart-case"
-  vim.o.grepformat = "%f:%l:%c:%m"
-
-  -- 2) FZF-поиск по содержимому: :Rg
-  vim.g.fzf_vimgrep_arguments = {
-    "wsl", "rg",
-    "--column",
-    "--line-number",
-    "--no-heading",
-    "--color=always",
-    "--smart-case"
-  }
-
-  -- 3) FZF-поиск по файлам: :Files
-  vim.env.FZF_DEFAULT_COMMAND = table.concat({
-    "wsl rg --files --hidden --follow",
-    "--glob !{.git,node_modules}/*"
-  }, " ")
-
-  -- 4) Настройки shell-redir, чтобы Neovim не пытался юзать Windows-tee
-  vim.o.shellslash   = false
-  vim.o.shellredir   = ">%s 2>&1"
-  vim.o.shellcmdflag = "/c"
-  vim.o.shell        = "cmd.exe"
-end
