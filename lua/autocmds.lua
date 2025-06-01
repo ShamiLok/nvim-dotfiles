@@ -56,5 +56,9 @@ end, { expr = true, noremap = true })
 -- 		    e nd, 
 -- })
 
--- 
-
+vim.api.nvim_create_autocmd("TermOpen", {
+  pattern = "*",
+  callback = function()
+    vim.cmd("startinsert")
+  end,
+})
