@@ -4,7 +4,7 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	  pattern = "sh,python,typescript,javascript",
+	  pattern = "sh,python,typescript,javascript,qml",
 	  command = "setlocal commentstring=#\\ %s",
 })
 
