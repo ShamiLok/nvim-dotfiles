@@ -41,12 +41,9 @@ vim.api.nvim_create_autocmd("VimEnter", {
 -- сброс подстветки поиска
 vim.keymap.set('c', '<CR>', function()
   if vim.fn.getcmdtype() == ':' then
-    -- Enter из :-режима — сработало :s/// → сбрасываем hlsearch
-    return '<CR>:nohlsearch<CR>'
-  else
-    -- Enter из / или ? — просто выполняем поиск без сброса
-    return '<CR>'
+    vim.cmd('nohlsearch')  -- вызывает nohlsearch «в фоне», не показывая команду
   end
+	return '<CR>'
 end, { expr = true, noremap = true })
 -- 
 -- -- Авто-обновление Airline после VimEnter

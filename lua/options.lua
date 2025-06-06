@@ -4,7 +4,7 @@ vim.opt.encoding = "utf-8"
 vim.opt.compatible = false
 
 vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.opt.smartcase = false
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 

@@ -43,4 +43,4 @@ vim.keymap.set("v", "<leader>c", "<Plug>NERDCommenterToggle", {})
 vim.api.nvim_set_keymap('n', '<leader>g', ':Gitsigns preview_hunk<CR>', { noremap = true, silent = true })
 
 -- vsplit
-vim.keymap.set("n", "<leader>v", ":vsplit<Space>", { noremap = true })
+vim.keymap.set("n", "<leader>v", ":vsplit<Space>", { noremap = true, silent = true })

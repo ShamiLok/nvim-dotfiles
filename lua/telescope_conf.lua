@@ -75,6 +75,11 @@ telescope.setup{
         -- При выборе Enter — использовать нашу функцию,
         -- чтобы перейти на строку/столбец (если доступны)
         ["<CR>"]  = open_with_position,
+		["<C-v>"] = function(prompt_bufnr)
+		  -- Симулируем нажатие <C-r>+ в prompt-е, чтобы вставить содержимое системного буфера
+		  local paste = vim.api.nvim_replace_termcodes("<C-r>+", true, false, true)
+		  vim.api.nvim_feedkeys(paste, "i", false)
+		end,
       },
       n = {
         ["<C-n>"] = function(prompt_bufnr)
