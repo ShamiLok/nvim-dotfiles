@@ -68,3 +68,55 @@ vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/opt
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])
 vim.g.airline_section_z = ''  -- Процент прокрутки
+
+-- В самом верху файла (или перед тем, как вызывать setup) подключаем модули:
+local lspconfig = require("lspconfig")
+-- модуль configs хранит все «известные» конфигурации серверов
+local configs   = require("lspconfig.configs")
+local util      = require("lspconfig.util")
+
+-- Проверяем, не зарегистрирован ли уже (чтобы не перезаписывать дважды, если вы перезагрузите файл)
+if not configs.myqtjs then
+  configs.myqtjs = {
+    default_config = {
+      -- 1) Абсолютный путь к вашему LSP-серверу
+      --    Убедитесь, что файл действительно лежит по этому пути
+      --    и запускается через python3 без ошибок.
+      cmd = { "python3", "/home/uzver/work/iptvApp/qmlcore/myqtjs_lsp.py" },
+
+      -- 2) Для каких filetype запускать сервер. 
+      --    Мы хотим, чтобы LSP работал только на *.qml
+      filetypes = { "qml" },
+
+      -- 3) Как определять «корень» проекта. 
+      --    В этом примере мы ищем ближайший каталог с .git или src.
+      --    Если не нашли – по умолчанию попадём в директорию файла.
+      root_dir = function(fname)
+        return util.root_pattern(".git", "src")(fname)
+               or util.path.dirname(fname)
+      end,
+
+      -- 4) Любые дополнительные поля, которые ваш сервер ожидает при инициализации.
+      --    Мы оставим пустым ({}), но впоследствии, если сервер будет принимать
+      --    какие-то init_options или настройки, сюда их можно поместить.
+      settings = {},
+    }
+  }
+end
+
+-- Наконец, вызываем setup для нашего «myqtjs».
+-- После этого Neovim/LSPConfig «знает», как работать с сервером myqtjs.
+lspconfig.myqtjs.setup {
+  -- Здесь вы можете добавить своё on_attach, capabilities и т. д.
+  on_attach = function(client, bufnr)
+    -- Например, привязка горячих клавиш для LSP
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local opts = { noremap=true, silent=true }
+    buf_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+    buf_set_keymap("n", "K",  "<cmd>lua vim.lsp.buf.hover()<CR>",      opts)
+    -- … и так далее …
+  end,
+  flags = {
+    debounce_text_changes = 150,
+  },
+}
