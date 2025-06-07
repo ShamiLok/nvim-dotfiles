@@ -1,13 +1,3 @@
-vim.api.nvim_create_autocmd("FileType", { 
-  pattern = "text",
-  command = "setlocal commentstring=#\\ %s"
-})
-
-vim.api.nvim_create_autocmd("FileType", {
-	  pattern = "sh,python,typescript,javascript,qml",
-	  command = "setlocal commentstring=#\\ %s",
-})
-
 vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
 	pattern = "*",
 	callback = function()

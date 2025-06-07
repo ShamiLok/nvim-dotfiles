@@ -120,3 +120,5 @@ lspconfig.myqtjs.setup {
     debounce_text_changes = 150,
   },
 }
+
+vim.g.NERDCommenterPadding = 1
