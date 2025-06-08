@@ -1,4 +1,3 @@
--- lua/alpha_conf.lua
 local alpha = require("alpha")
 local dashboard = require("alpha.themes.dashboard")
 
@@ -51,8 +50,4 @@ dashboard.section.buttons.val = {
   dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
 }
 
--- Показать последние открытые файлы
-dashboard.section.footer.val = { "Have a nice day!" }
-
 alpha.setup(dashboard.config)
-

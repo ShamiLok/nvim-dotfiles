@@ -1,0 +1,3 @@
+[submodule "pureqml-lsp"]
+	path = pureqml-lsp
+	url = git@github-private:ShamiLok/pureqml-lsp.git
