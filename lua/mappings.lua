@@ -15,7 +15,7 @@ vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true })
 vim.keymap.set('v', '<C-v>', '"+P', { noremap = true })
 
 -- Tab autocomplete with CoC
-vim.api.nvim_set_keymap("i", "<Tab>", "coc#pum#visible() ? coc#pum#confirm() : '<Tab>'", { noremap = true, expr = true, silent = true })
+-- vim.api.nvim_set_keymap("i", "<Tab>", "coc#pum#visible() ? coc#pum#confirm() : '<Tab>'", { noremap = true, expr = true, silent = true })
 
 -- Close terminal with ESC
 vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent = true })
@@ -43,4 +43,4 @@ vim.keymap.set("v", "<leader>c", "<Plug>NERDCommenterToggle", {})
 vim.api.nvim_set_keymap('n', '<leader>g', ':Gitsigns preview_hunk<CR>', { noremap = true, silent = true })
 
 -- vsplit
-vim.keymap.set("n", "<leader>v", ":vsplit<Space>", { noremap = true })
+vim.keymap.set("n", "<leader>v", ":vsplit<Space>", { noremap = true, silent = true })

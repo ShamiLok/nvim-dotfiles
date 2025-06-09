@@ -1,19 +1,35 @@
 vim.cmd [[
 	call plug#begin(stdpath('data') . '/plugged')
-"	Plug 'scrooloose/nerdtree'
+	" комменты
 	Plug 'preservim/nerdcommenter'
-"	Plug 'ryanoasis/vim-devicons'
+	" git
 	Plug 'tpope/vim-fugitive'
+	" bar
 	Plug 'vim-airline/vim-airline'
 	Plug 'vim-airline/vim-airline-themes'
-	Plug 'neoclide/coc.nvim'
+	" load extensions and language servers
+	" Plug 'neoclide/coc.nvim'
+	" action at sudo
 	Plug 'lambdalisue/suda.vim'
+	" git conflicts 
 	Plug 'rhysd/conflict-marker.vim'
+	" git intergation
 	Plug 'lewis6991/gitsigns.nvim'
+	" file manager
 	Plug 'kyazdani42/nvim-tree.lua'
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'nvim-lua/plenary.nvim'
+	" global search
 	Plug 'nvim-telescope/telescope.nvim', {'tag': '0.1.3'}
+	" start window
+	Plug 'goolord/alpha-nvim'
+	" completion lsp snippets
+	Plug 'neovim/nvim-lspconfig'
+	Plug 'hrsh7th/cmp-nvim-lsp'
+	Plug 'hrsh7th/vim-vsnip'
+	Plug 'hrsh7th/nvim-cmp'
+	Plug 'rafamadriz/friendly-snippets'
+	" подсветка слов/блоков
 	Plug 'echasnovski/mini.nvim'
 	call plug#end()
 ]]

@@ -4,7 +4,7 @@ vim.opt.encoding = "utf-8"
 vim.opt.compatible = false
 
 vim.opt.ignorecase = true
-vim.opt.smartcase = true
+vim.opt.smartcase = false
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
@@ -68,3 +68,11 @@ vim.g.airline_section_c = ''  -- Убирает текущий файл (lua/opt
 vim.g.airline_section_x = '%{&filetype}'  -- Убирает тип файла (Lua)
 vim.g.airline_section_y = ''  -- Убирает формат файла ([unix])
 vim.g.airline_section_z = ''  -- Процент прокрутки
+
+-- В самом верху файла (или перед тем, как вызывать setup) подключаем модули:
+local lspconfig = require("lspconfig")
+-- модуль configs хранит все «известные» конфигурации серверов
+local configs   = require("lspconfig.configs")
+local util      = require("lspconfig.util")
+
+vim.g.NERDCommenterPadding = 1
