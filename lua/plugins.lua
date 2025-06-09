@@ -14,8 +14,12 @@ vim.cmd [[
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'nvim-lua/plenary.nvim'
 	Plug 'nvim-telescope/telescope.nvim', {'tag': '0.1.3'}
+	Plug 'echasnovski/mini.nvim'
 	call plug#end()
 ]]
+
+require('mini.cursorword').setup() -- подстветка слов
+require('mini.indentscope').setup() -- выделение текущего блока/функции по табам
 
 -- 2) Настройка nvim-tree (убираем adaptive_size!)
 require("nvim-tree").setup {
