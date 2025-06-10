@@ -6,7 +6,7 @@ local lsp_path = vim.fn.stdpath("config") .. "/pureqml-lsp/myqtjs_lsp.py"
 if not configs.myqtjs then
   configs.myqtjs = {
     default_config = {
-      cmd       = { 'python3', lsp_path},
+      cmd       = { 'python', lsp_path},
       filetypes = { 'qml' },
       root_dir  = function(fname)
         return util.root_pattern('.git', 'src')(fname) or util.path.dirname(fname)

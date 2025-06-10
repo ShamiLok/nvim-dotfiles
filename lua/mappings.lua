@@ -44,3 +44,23 @@ vim.api.nvim_set_keymap('n', '<leader>g', ':Gitsigns preview_hunk<CR>', { norema
 
 -- vsplit
 vim.keymap.set("n", "<leader>v", ":vsplit<Space>", { noremap = true, silent = true })
+
+-- ⌘+= / Ctrl+= (в зависимости от платформы) — увеличить масштаб
+vim.keymap.set('n', '<C-=>', function()
+	vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1
+end, { silent = true, desc = "Neovide: zoom in" })
+
+-- ⌘+- / Ctrl+- — уменьшить масштаб
+vim.keymap.set('n', '<C-->', function()
+	vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1
+end, { silent = true, desc = "Neovide: zoom out" })
+
+-- W == w Q == w
+vim.cmd([[command! W w]])
+vim.cmd([[command! Q q]])
+
+-- Навигация в командной строке (command-line mode) с помощью Ctrl + hjkl
+vim.keymap.set('c', '<C-h>', '<Left>',  { noremap = true })
+vim.keymap.set('c', '<C-l>', '<Right>', { noremap = true })
+vim.keymap.set('c', '<C-j>', '<Down>',  { noremap = true })
+vim.keymap.set('c', '<C-k>', '<Up>',    { noremap = true })
