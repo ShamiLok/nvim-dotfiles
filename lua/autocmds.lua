@@ -15,6 +15,7 @@ vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
 --})
 
 
+
 -- после того как setup уже отработал:
 -- vim.api.nvim_create_autocmd("VimEnter", {
 -- 	callback = function(data)
@@ -71,4 +72,20 @@ vim.api.nvim_create_autocmd("TermOpen", {
   callback = function()
     vim.cmd("startinsert")
   end,
+})
+
+-- Функция для удаления флагов r и o из локального formatoptions
+local function remove_comment_formatflags()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local fo = vim.api.nvim_buf_get_option(bufnr, "formatoptions")
+  local new_fo = fo:gsub("[ro]", "")
+  if new_fo ~= fo then
+    vim.api.nvim_buf_set_option(bufnr, "formatoptions", new_fo)
+  end
+end
+
+-- Убираем после FileType, после BufEnter, после InsertLeave
+vim.api.nvim_create_autocmd({"FileType", "BufEnter", "InsertLeave"}, {
+	pattern = "*",
+	callback = remove_comment_formatflags,
 })

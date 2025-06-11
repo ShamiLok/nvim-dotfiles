@@ -1,6 +1,7 @@
 vim.cmd [[
 	call plug#begin(stdpath('data') . '/plugged')
 	" комменты
+	" TODO: Comment.nvim
 	Plug 'preservim/nerdcommenter'
 	" git
 	Plug 'tpope/vim-fugitive'

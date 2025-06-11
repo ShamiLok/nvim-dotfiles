@@ -76,3 +76,7 @@ local configs   = require("lspconfig.configs")
 local util      = require("lspconfig.util")
 
 vim.g.NERDCommenterPadding = 1
+vim.g.NERDDefaultAlign = nil
+vim.g.NERDSpaceDelims = 1
+vim.g.NERDCommenterAlignLeft = 0      -- выравнивание по текущему отступу
+vim.g.NERDCommenterFixIndent = 1      -- сохранять текущий отступ
