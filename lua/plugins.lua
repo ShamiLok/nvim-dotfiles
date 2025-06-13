@@ -21,7 +21,7 @@ vim.cmd [[
 	Plug 'kyazdani42/nvim-web-devicons'
 	Plug 'nvim-lua/plenary.nvim'
 	" global search
-	Plug 'nvim-telescope/telescope.nvim', {'tag': '0.1.3'}
+	Plug 'nvim-telescope/telescope.nvim',
 	" start window
 	Plug 'goolord/alpha-nvim'
 	" completion lsp snippets

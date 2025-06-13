@@ -6,7 +6,7 @@ vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent
 vim.keymap.set('n', '<C-v>', '"+P', { noremap = true })
 
 -- В Insert mode: вставка текста из буфера обмена в позиции курсора
-vim.keymap.set('i', '<C-v>', '<C-r>+', { noremap = true })
+vim.keymap.set('i', '<C-v>', '<C-o>:set paste<CR><C-r>+<C-o>:set nopaste<CR>', { noremap = true })
 
 -- В Command-line mode: вставка текста из буфера обмена в командной строке
 vim.keymap.set('c', '<C-v>', '<C-r>+', { noremap = true })
