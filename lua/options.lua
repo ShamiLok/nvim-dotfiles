@@ -22,8 +22,9 @@ vim.opt.relativenumber = false
 vim.opt.wildmode = { "longest", "list" }
 
 vim.cmd("syntax on")
+vim.opt.foldenable		= true
 vim.opt.foldmethod		= "indent" -- фолд по табам
-vim.opt.foldnestmax		= 1 -- уровни вложенности
+vim.opt.foldnestmax		= 2 -- уровни вложенности
 vim.opt.foldminlines	= 20 -- количество строк для фолда
 vim.opt.foldlevel		= 1 -- по умолчанию все будет свернуто на уровень 1
 

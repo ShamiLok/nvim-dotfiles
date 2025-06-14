@@ -124,3 +124,45 @@ telescope.setup{
     -- Можно тут подключать fzf-native, media_files и т.п.
   },
 }
+
+-- замена с telescpope
+local function escape_for_vimgrep(str)
+  -- экранируем слеши и спецсимволы, если нужно; здесь базово: заменить '/' на '\/'
+  return str:gsub("/", "\\/")
+end
+
+local function replace_on_existing_quickfix()
+  -- Проверяем, что quickfix не пуст
+  local qfl = vim.fn.getqflist()
+  if vim.tbl_isempty(qfl) then
+    print("Quickfix list is empty; run live_grep + <C-q> first")
+    return
+  end
+  -- Спрашиваем паттерн и замену
+  vim.ui.input({ prompt = "Search pattern (for replacement): " }, function(pattern)
+    if not pattern or pattern == "" then
+      print("Cancelled")
+      return
+    end
+    local esc_pattern = escape_for_vimgrep(pattern)
+    vim.ui.input({ prompt = "Replacement text: " }, function(replacement)
+      if replacement == nil then
+        print("Cancelled")
+        return
+      end
+      local esc_replacement = replacement:gsub("/", "\\/")
+      vim.cmd('copen')
+      vim.ui.input({ prompt = "Run replace on quickfix matches with confirmation? (yes): " }, function(ans)
+        if not ans or ans:lower()~="yes" then
+          print("Aborted")
+          return
+        end
+        vim.cmd('cfdo %s/'..esc_pattern..'/'..esc_replacement..'/gc | update')
+        print("Done")
+      end)
+    end)
+  end)
+end
+
+vim.keymap.set('n', '<leader>t', replace_on_existing_quickfix, { desc="Replace on existing quickfix" })
+-- замена с telescope end
