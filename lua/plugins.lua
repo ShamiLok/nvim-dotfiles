@@ -17,8 +17,10 @@ vim.cmd [[
 	" git intergation
 	Plug 'lewis6991/gitsigns.nvim'
 	" file manager
-	Plug 'kyazdani42/nvim-tree.lua'
-	Plug 'kyazdani42/nvim-web-devicons'
+	" Plug 'kyazdani42/nvim-tree.lua'
+	" nvim-tree requirements
+	" Plug 'kyazdani42/nvim-web-devicons'
+	" telescope requirement
 	Plug 'nvim-lua/plenary.nvim'
 	" global search
 	Plug 'nvim-telescope/telescope.nvim',
@@ -39,21 +41,21 @@ require('mini.cursorword').setup() -- подстветка слов
 require('mini.indentscope').setup() -- выделение текущего блока/функции по табам
 
 -- 2) Настройка nvim-tree (убираем adaptive_size!)
-require("nvim-tree").setup {
-  disable_netrw       = true,
-  hijack_netrw        = true,
-  update_focused_file = { enable = true, update_root = true },
-  view = {
-    width         = 30,
-    side          = "left",
-    adaptive_size = false,  -- 👈 Важно: ОТКЛЮЧАЕМ adaptive_size
-  },
-  filters = {
-    dotfiles = false,
-    custom   = { "^.git$" },
-  },
-  hijack_directories = {
-    enable    = true,
-    auto_open = false,      -- 👈 Выключаем встроенное авто-открытие
-  },
-}
+-- require("nvim-tree").setup {
+--   disable_netrw       = true,
+--   hijack_netrw        = true,
+--   update_focused_file = { enable = true, update_root = true },
+--   view = {
+--     width         = 30,
+--     side          = "left",
+--     adaptive_size = false,  -- 👈 Важно: ОТКЛЮЧАЕМ adaptive_size
+--   },
+--   filters = {
+--     dotfiles = false,
+--     custom   = { "^.git$" },
+--   },
+--   hijack_directories = {
+--     enable    = true,
+--     auto_open = false,      -- 👈 Выключаем встроенное авто-открытие
+--   },
+-- }
