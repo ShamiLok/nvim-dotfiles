@@ -64,3 +64,6 @@ vim.keymap.set('c', '<C-h>', '<Left>',  { noremap = true })
 vim.keymap.set('c', '<C-l>', '<Right>', { noremap = true })
 vim.keymap.set('c', '<C-j>', '<Down>',  { noremap = true })
 vim.keymap.set('c', '<C-k>', '<Up>',    { noremap = true })
+
+vim.keymap.set('n', 'x', '"_x', { noremap = true }) -- удаление x всегда в black hole
+vim.keymap.set('v', 'x', '"_x', { noremap = true }) -- удаление x всегда в black hole
