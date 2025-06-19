@@ -98,3 +98,15 @@ vim.api.nvim_create_autocmd("BufReadPost", {
     end, 50)
   end,
 })
+
+-- Автоматически включать wrap в превьюере Telescope
+vim.api.nvim_create_autocmd("User", {
+  pattern = "TelescopePreviewerLoaded",
+  callback = function()
+    -- Только для окна предпросмотра
+    vim.wo.wrap = true
+    vim.wo.linebreak = true
+    -- При желании можно также настроить:
+    -- vim.wo.showbreak = "↪ "   -- префикс для перенесённых строк
+  end,
+})
