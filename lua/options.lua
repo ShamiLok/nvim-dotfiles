@@ -37,7 +37,6 @@ vim.cmd("filetype plugin indent on")
 
 vim.opt.cursorline = true
 vim.opt.cursorlineopt = "number"
-vim.cmd("highlight CursorLineNr cterm=bold ctermfg=Yellow guifg=#FFD700 gui=bold")
 
 vim.opt.list = true
 vim.opt.listchars = {
@@ -83,3 +82,12 @@ vim.g.NERDCommenterAlignLeft = 0      -- выравнивание по теку�
 vim.g.NERDCommenterFixIndent = 1      -- сохранять текущий отступ
 -- vim.g.neovide_font = "JetBrainsMono Nerd Font"
 -- vim.o.guifont = "JetBrainsMono Nerd Font"
+
+-- some colors
+vim.cmd("colorscheme koehler")
+vim.cmd("highlight comment guifg=gray")
+vim.cmd("highlight CursorLineNr cterm=bold ctermfg=Yellow guifg=#FFD700 gui=bold")
+vim.api.nvim_set_hl(0, "ModeMsg", { bg = "NONE" })
+vim.api.nvim_set_hl(0, "Whitespace", { fg = "#5c6370", bg = "NONE" })
+vim.api.nvim_set_hl(0, "NonText",    { fg = "#5c6370", bg = "NONE" })
+vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#5c6370", bg = "NONE" })

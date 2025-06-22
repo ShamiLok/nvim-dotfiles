@@ -7,7 +7,7 @@ vim.cmd [[
 	Plug 'tpope/vim-fugitive'
 	" bar
 	Plug 'vim-airline/vim-airline'
-	Plug 'vim-airline/vim-airline-themes'
+		Plug 'vim-airline/vim-airline-themes'
 	" load extensions and language servers
 	" Plug 'neoclide/coc.nvim'
 	" action at sudo
@@ -20,8 +20,14 @@ vim.cmd [[
 	" Plug 'kyazdani42/nvim-tree.lua'
 	" nvim-tree requirements
 	" Plug 'kyazdani42/nvim-web-devicons'
-	" telescope requirement
-	Plug 'nvim-lua/plenary.nvim'
+	" new file manager
+	Plug 'nvim-neo-tree/neo-tree.nvim'
+		" neo-tree and telescope requirement
+		Plug 'nvim-lua/plenary.nvim'
+		" neo-tree reccommended requirement
+		Plug 'nvim-tree/nvim-web-devicons'
+		" neo-tree reuirement
+		Plug 'MunifTanjim/nui.nvim'
 	" global search
 	Plug 'nvim-telescope/telescope.nvim',
 	" start window

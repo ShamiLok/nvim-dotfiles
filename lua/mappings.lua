@@ -1,6 +1,6 @@
 -- vim.o.langmap = "й,q,ц,w,у,e,к,r,е,t,н,y,г,u,ш,i,щ,o,з,p,х,[,ъ,],ф,a,ы,s,в,d,а,f,п,g,р,h,р,j,о,k,л,l,д,z,ж,x,э,c,я,v,ч,b,с,n,ш,m,м,<,я,>,ё"
 -- vim.keymap.set("n", "<leader>n", ":NERDTreeToggle<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>n", ":Neotree<CR>", { noremap = true, silent = true })
 
 -- В Normal mode: вставка текста из буфера обмена перед курсором
 vim.keymap.set('n', '<C-v>', '"+P', { noremap = true })
