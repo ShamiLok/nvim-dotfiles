@@ -80,6 +80,12 @@ telescope.setup{
 		  local paste = vim.api.nvim_replace_termcodes("<C-r>+", true, false, true)
 		  vim.api.nvim_feedkeys(paste, "i", false)
 		end,
+-- перемещение по списку результатов
+        ["<C-j>"] = actions.move_selection_next,
+        ["<C-k>"] = actions.move_selection_previous,
+        -- если хочешь также листать историю запросов:
+        ["<C-Down>"] = actions.cycle_history_next,
+        ["<C-Up>"] = actions.cycle_history_prev,
       },
       n = {
         ["<C-n>"] = function(prompt_bufnr)
