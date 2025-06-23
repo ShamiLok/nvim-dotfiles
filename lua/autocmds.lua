@@ -1,12 +1,12 @@
-vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
-	pattern = "*",
-	callback = function()
-		if vim.bo.filetype == "" then
-			vim.bo.commentstring = "# %s"
-			vim.bo.filetype = "text"
-		end
-	end
-})
+-- vim.api.nvim_create_autocmd({"BufReadPost", "BufNewFile"}, {
+	-- pattern = "*",
+	-- callback = function()
+		-- if vim.bo.filetype == "" then
+			-- vim.bo.commentstring = "# %s"
+			-- vim.bo.filetype = "text"
+		-- end
+	-- end
+-- })
 
 -- auto nerdtree refresh
 --vim.api.nvim_create_autocmd("FocusGained", {
