@@ -32,17 +32,17 @@ end
 telescope.setup{
   defaults = {
     -- Параметры для live_grep (rg с возвратом file:line:col:match)
-    vimgrep_arguments = {
-      "rg",
-      "--color=never",
-      "--no-heading",
-      "--with-filename",
-      "--line-number",
-      "--column",
-      "--smart-case",
-      -- Исключения.
-      "--glob", "!node_modules/*",
-    },
+    -- vimgrep_arguments = {
+      -- "rg",
+      -- "--color=never",
+      -- "--no-heading",
+      -- "--with-filename",
+      -- "--line-number",
+      -- "--column",
+      -- "--smart-case",
+      -- -- Исключения.
+      -- "--glob", "!node_modules/*",
+    -- },
 
     prompt_prefix   = "🔍 ",
     selection_caret = "➤ ",

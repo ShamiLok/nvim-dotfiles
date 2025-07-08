@@ -1,4 +1,6 @@
 vim.g.mapleader = ","
+vim.o.shellredir = ">%s 2>&1"
+vim.o.shellpipe  = ">%s 2>&1"
 
 vim.opt.encoding = "utf-8"
 vim.opt.compatible = false
@@ -17,7 +19,7 @@ vim.opt.autoindent = true
 vim.opt.smartindent = true
 
 vim.opt.number = true
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 
 vim.opt.wildmode = { "longest", "list" }
 
@@ -91,3 +93,25 @@ vim.api.nvim_set_hl(0, "ModeMsg", { bg = "NONE" })
 vim.api.nvim_set_hl(0, "Whitespace", { fg = "#5c6370", bg = "NONE" })
 vim.api.nvim_set_hl(0, "NonText",    { fg = "#5c6370", bg = "NONE" })
 vim.api.nvim_set_hl(0, "SpecialKey", { fg = "#5c6370", bg = "NONE" })
+
+require("neo-tree").setup({
+  filesystem = {
+    filtered_items = {
+      -- включить отображение скрытых и отфильтрованных элементов
+      visible = true,
+
+      -- не скрывать файлы/папки, начинающиеся с точки
+      hide_dotfiles = false,
+
+      -- не скрывать другие системные скрытые файлы
+      hide_hidden = false,
+
+      -- если у вас есть какие‑то patterns в hide_by_name – очистите их
+      hide_by_name = {},
+      never_show = {},          -- можно перечислить имена, которые всегда будут скрыты
+      never_show_by_pattern = {}, -- можно перечислить паттерны, которые всегда будут скрыты
+    },
+    -- (остальная ваша конфигурация в filesystem…)
+  },
+  -- ... другие секции (buffers, git_status и т. д.) ...
+})
