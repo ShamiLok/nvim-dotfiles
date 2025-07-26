@@ -113,7 +113,6 @@ vim.api.nvim_create_autocmd("User", {
 
 -- :make
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qml",
   callback = function()
     vim.bo.makeprg = "python qmlcore/build"
     vim.opt_local.errorformat = {
@@ -151,5 +150,10 @@ vim.api.nvim_create_autocmd("BufWinLeave", {
 
 vim.api.nvim_create_autocmd("BufWinEnter", {
   pattern = "*.qml",
-  callback = function() vim.cmd('silent! loadview') end,
+  callback = function()
+	if vim.fn.winnr() == 1 and not vim.b.view_saved then
+		vim.cmd('silent! loadview')
+		vim.b.view_saved = true
+	end
+  end,
 })
