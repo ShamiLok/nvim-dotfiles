@@ -90,14 +90,14 @@ vim.api.nvim_create_autocmd({"FileType", "BufEnter", "InsertLeave"}, {
 	callback = remove_comment_formatflags,
 })
 
-vim.api.nvim_create_autocmd("BufReadPost", {
-  callback = function()
-    vim.defer_fn(function()
-	  vim.cmd("normal! zM") -- сворачивсем все
-	  vim.cmd("normal! zr") -- раскрываем первый уровень
-    end, 50)
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufReadPost", {
+  -- callback = function()
+    -- vim.defer_fn(function()
+	  -- vim.cmd("normal! zM") -- сворачивсем все
+	  -- vim.cmd("normal! zr") -- раскрываем первый уровень
+    -- end, 50)
+  -- end,
+-- })
 
 -- Автоматически включать wrap в превьюере Telescope
 vim.api.nvim_create_autocmd("User", {

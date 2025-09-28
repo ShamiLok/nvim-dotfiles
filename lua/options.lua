@@ -115,3 +115,5 @@ require("neo-tree").setup({
   },
   -- ... другие секции (buffers, git_status и т. д.) ...
 })
+
+vim.opt.mouse = ""
