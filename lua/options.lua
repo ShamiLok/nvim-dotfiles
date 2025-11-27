@@ -117,3 +117,5 @@ require("neo-tree").setup({
 })
 
 vim.opt.mouse = ""
+
+vim.opt.guicursor = "n-v-c:block,i-ci:block,r-cr:block"
