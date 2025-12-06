@@ -143,17 +143,17 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 })
 
 -- фикс фолдинга после выхода из ex выхода
-vim.api.nvim_create_autocmd("BufWinLeave", {
-  pattern = "*.qml",
-  callback = function() vim.cmd('mkview') end,
-})
+-- vim.api.nvim_create_autocmd("BufWinLeave", {
+  -- pattern = "*.qml",
+  -- callback = function() vim.cmd('mkview') end,
+-- })
 
-vim.api.nvim_create_autocmd("BufWinEnter", {
-  pattern = "*.qml",
-  callback = function()
-	if vim.fn.winnr() == 1 and not vim.b.view_saved then
-		vim.cmd('silent! loadview')
-		vim.b.view_saved = true
-	end
-  end,
-})
+-- vim.api.nvim_create_autocmd("BufWinEnter", {
+  -- pattern = "*.qml",
+  -- callback = function()
+	-- if vim.fn.winnr() == 1 and not vim.b.view_saved then
+		-- vim.cmd('silent! loadview')
+		-- vim.b.view_saved = true
+	-- end
+  -- end,
+-- })
