@@ -7,3 +7,7 @@ vim.api.nvim_create_user_command('Gdt', function()
   vim.cmd('Git difftool')
 end, { desc = "Git difftool in 2 panes" })
 
+-- фикс открытия первого изменения в списке quickfix
+vim.api.nvim_create_user_command("Gitdt", function(opts)
+  vim.cmd("Git! difftool " .. opts.args)
+end, { nargs = "*" })

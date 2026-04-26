@@ -44,8 +44,10 @@ vim.api.nvim_set_keymap('n', '<leader>l', ':bnext<CR>', { noremap = true, silent
 vim.api.nvim_set_keymap('n', '<leader>h', ':bprevious<CR>', { noremap = true, silent = true })
 
 --comments 
-vim.keymap.set("n", "<leader>c", "<Plug>NERDCommenterToggle", {})
-vim.keymap.set("v", "<leader>c", "<Plug>NERDCommenterToggle", {})
+vim.keymap.set({ "n", "v" }, "<leader>c", "<Plug>NERDCommenterToggle", {
+  silent = true,
+  nowait = true,
+})
 
 -- get changes
 vim.api.nvim_set_keymap('n', '<leader>g', ':Gitsigns preview_hunk<CR>', { noremap = true, silent = true })

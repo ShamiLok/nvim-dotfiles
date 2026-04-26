@@ -82,8 +82,7 @@ vim.g.NERDDefaultAlign = nil
 vim.g.NERDSpaceDelims = 1
 vim.g.NERDCommenterAlignLeft = 0      -- выравнивание по текущему отступу
 vim.g.NERDCommenterFixIndent = 1      -- сохранять текущий отступ
--- vim.g.neovide_font = "JetBrainsMono Nerd Font"
--- vim.o.guifont = "JetBrainsMono Nerd Font"
+vim.g.NERDCreateDefaultMappings = 0   -- default mappings disable
 
 -- some colors
 vim.cmd("colorscheme koehler")
