@@ -157,3 +157,11 @@ vim.api.nvim_create_autocmd("QuickFixCmdPost", {
 	-- end
   -- end,
 -- })
+
+-- фикс подсветки синтаксиса при открытых двух одинаковых буферах
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "qml",
+  callback = function()
+    vim.cmd("syntax sync fromstart")
+  end,
+})

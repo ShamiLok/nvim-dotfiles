@@ -117,6 +117,12 @@ telescope.setup{
         "--follow",
         "--glob", "!.git/*",
         "--glob", "!node_modules/*",
+        "--glob", "!dist/*",
+        "--glob", "!build/*",
+        "--glob", "!target/*",
+        "--glob", "!.venv/*",
+        "--glob", "!.cache/*",
+        "--glob", "!.idea/*",
       },
       -- Превью по умолчанию (buffer_previewer_maker)
     },
