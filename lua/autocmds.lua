@@ -111,21 +111,6 @@ vim.api.nvim_create_autocmd("User", {
   end,
 })
 
--- :make
-vim.api.nvim_create_autocmd("FileType", {
-  callback = function()
-    vim.bo.makeprg = "python qmlcore/build"
-    vim.opt_local.errorformat = {
-      -- ловим строку: file: error: at line X:Y:
-      "%f: error: at line %l:%c:",
-      -- на случай, если вдруг сообщение появится сразу после колонки:
-      "%f: error: at line %l:%c: %m",
-      -- на всякий случай общий формат file:line:col: message
-      "%f:%l:%c: %m",
-    }
-  end,
-})
-
 -- после запуска :make проверяем ошибки
 vim.api.nvim_create_autocmd("QuickFixCmdPost", {
   pattern = "make",

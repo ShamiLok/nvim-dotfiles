@@ -121,3 +121,15 @@ vim.opt.guicursor = "n-v-c:block,i-ci:block,r-cr:block"
 
 -- nvim colorizer requirements
 vim.opt.termguicolors = true
+
+
+-- :make
+vim.opt.makeprg = "python qmlcore/build"
+vim.opt.errorformat = {
+  -- ловим строку: file: error: at line X:Y:
+  "%f: error: at line %l:%c:",
+  -- на случай, если вдруг сообщение появится сразу после колонки:
+  "%f: error: at line %l:%c: %m",
+  -- на всякий случай общий формат file:line:col: message
+  "%f:%l:%c: %m",
+}
