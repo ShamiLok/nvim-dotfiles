@@ -8,25 +8,99 @@ local action_state  = require("telescope.actions.state")
 local previewers    = require("telescope.previewers")
 local sorters       = require("telescope.sorters")
 
---- Общая функция, которая вызывается при нажатии <CR>:
---- берёт entry, закрывает окно и открывает файл на нужной строке
+local function normalize_path(path)
+  return vim.fn.fnamemodify(path, ":p")
+end
+
+local function find_buf_by_path(path)
+  local target = normalize_path(path)
+
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) then
+      local name = vim.api.nvim_buf_get_name(buf)
+      if name ~= "" and normalize_path(name) == target then
+        return buf
+      end
+    end
+  end
+end
+
+local function find_line_by_text(buf, needle, around_lnum, radius)
+  if type(needle) ~= "string" or needle == "" then
+    return nil
+  end
+
+  around_lnum = around_lnum or 1
+  radius = radius or 100
+
+  local total = vim.api.nvim_buf_line_count(buf)
+  local start_lnum = math.max(1, around_lnum - radius)
+  local end_lnum = math.min(total, around_lnum + radius)
+
+  local lines = vim.api.nvim_buf_get_lines(buf, start_lnum - 1, end_lnum, false)
+  for i, line in ipairs(lines) do
+    if line:find(needle, 1, true) then
+      return start_lnum + i - 1
+    end
+  end
+
+  return nil
+end
+
 local function open_with_position(prompt_bufnr)
   local entry = action_state.get_selected_entry()
-  if not entry or not entry.path then
+  if not entry then
     return
   end
-  -- Закрываем окно Telescope
-  actions.close(prompt_bufnr)
-  -- Если entry содержит поля 'path' и 'line', можно сразу перейти
-  -- entry.value выглядит как "path:line:col:	text..."
-  -- Вызов select_default сделает это автоматически, но мы можем явно распарсить:
-  local filename = entry.path
-  local lnum = entry.line or entry.lnum or entry.row or nil
-  if lnum then
-    vim.cmd(string.format("edit +%d %s", lnum, vim.fn.fnameescape(filename)))
-  else
-    vim.cmd("edit " .. vim.fn.fnameescape(filename))
+
+  local filename = entry.path or entry.filename or entry.value
+  if not filename then
+    return
   end
+
+  local lnum = entry.line or entry.lnum or entry.row
+  local col = entry.col or entry.column or 1
+
+  -- лучше брать именно текст строки, если он есть
+  local text = entry.text
+  if type(text) ~= "string" or text == "" then
+    text = nil
+  end
+
+  actions.close(prompt_bufnr)
+
+  vim.schedule(function()
+    local target_buf = find_buf_by_path(filename)
+
+    if target_buf then
+      vim.api.nvim_set_current_buf(target_buf)
+
+      if vim.bo[target_buf].modified and text then
+        local found = find_line_by_text(target_buf, text, lnum, 150)
+        if found then
+          lnum = found
+        end
+      end
+
+      if lnum then
+        vim.api.nvim_win_set_cursor(0, { lnum, math.max(col - 1, 0) })
+      end
+      return
+    end
+
+    local cmd
+    if lnum then
+      cmd = string.format("keepalt edit +%d %s", lnum, vim.fn.fnameescape(filename))
+    else
+      cmd = "keepalt edit " .. vim.fn.fnameescape(filename)
+    end
+
+    vim.cmd(cmd)
+
+    if lnum and col then
+      vim.api.nvim_win_set_cursor(0, { lnum, math.max(col - 1, 0) })
+    end
+  end)
 end
 
 telescope.setup{
