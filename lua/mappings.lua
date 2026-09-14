@@ -28,16 +28,25 @@ vim.api.nvim_set_keymap("t", "<Esc>", [[<C-\><C-n>]], { noremap = true, silent =
 
 
 local builtin = require('telescope.builtin')
-vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = "Telescope find files" })
+-- <leader>f: быстрый поиск файлов с кешем (мгновенное открытие,
+-- фоновое обновление результатов). Fallback — обычный find_files.
+vim.keymap.set('n', '<leader>f', function()
+	local ok, tc = pcall(require, 'telescope_conf')
+	if ok and tc.find_files_fast then
+		tc.find_files_fast()
+	else
+		builtin.find_files()
+	end
+end, { desc = "Telescope find files (cached)" })
 vim.keymap.set('n', '<leader>R', builtin.live_grep,  { desc = "Telescope search" })
 vim.keymap.set('n', '<leader>r', function()
-	builtin.live_grep({
-		vimgrep_arguments = {
-		  "rg", "--color=never", "--no-heading", "--with-filename",
-		  "--line-number", "--column", "--smart-case", "--fixed-strings"
-		},
-	})
-end, { desc = "Telescope search" })
+	local ok, tc = pcall(require, 'telescope_conf')
+	if ok and tc.live_grep_fixed then
+		tc.live_grep_fixed()
+	else
+		builtin.live_grep()
+	end
+end, { desc = "Telescope search (fixed strings)" })
 
 -- switch buffer
 vim.api.nvim_set_keymap('n', '<leader>l', ':bnext<CR>', { noremap = true, silent = true })

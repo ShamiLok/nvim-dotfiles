@@ -38,14 +38,12 @@ vim.api.nvim_create_autocmd("VimEnter", {
     if args > 0 then
       -- data.file будет либо первым аргументом (путь к файлу/дире)
       if vim.fn.isdirectory(data.file) == 1 then
-        -- если это директория — открываем дерево
-        require("nvim-tree.api").tree.open { dir = data.file }
-      else
-        -- иначе просто редактируем файл (это уже по умолчанию)
-        -- не нужно ничего, :edit <file> выполнилось автоматически
+        -- neo-tree сам перехватывает открытие директории (hijack netrw),
+        -- ничего дополнительно делать не нужно
       end
+      -- иначе просто редактируем файл (это уже по умолчанию)
     else
-      -- НИКАКИХ nvim-tree! — вместо этого стартовый экран
+      -- стартовый экран
       require("alpha").start(true)
     end
   end,
