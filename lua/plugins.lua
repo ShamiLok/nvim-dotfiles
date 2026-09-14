@@ -1,3 +1,7 @@
+-- nvim-colorizer требует termguicolors на момент setup,
+-- поэтому ставим опцию ДО загрузки плагинов (в options.lua она тоже есть)
+vim.opt.termguicolors = true
+
 vim.cmd [[
 	call plug#begin(stdpath('data') . '/plugged')
 	" комменты

@@ -44,7 +44,7 @@ dashboard.section.header.val = {
 
 -- Кнопки быстрого доступа
 dashboard.section.buttons.val = {
-  dashboard.button("f", "  Find File", ":Telescope find_files<CR>"),
+  dashboard.button("f", "  Find File", ":FindFilesFast<CR>"),
   dashboard.button("r", "  Recent Files", ":Telescope oldfiles<CR>"),
   dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua<CR>"),
   dashboard.button("q", "  Quit NVIM", ":qa<CR>"),
